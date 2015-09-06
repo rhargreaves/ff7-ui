@@ -1,0 +1,21 @@
+@font-face {
+  font-family:"Final Fantasy Script Collection - Final Fantasy VII";
+  src:url("../fonts/Final_Fantasy_VII.eot?") format("eot"),
+    url("../fonts/Final_Fantasy_VII.woff") format("woff"),
+    url("../fonts/Final_Fantasy_VII.ttf") format("truetype"),
+    url("../fonts/Final_Fantasy_VII.svg#FinalFantasyVII") format("svg");
+  font-weight:normal;
+  font-style:normal;
+}
+
+@font-face {
+    font-family: 'final_fantasy_viiregular';
+    src: url('../fonts/final_fantasy_vii-webfont.eot');
+    src: url('../fonts/final_fantasy_vii-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/final_fantasy_vii-webfont.woff2') format('woff2'),
+         url('../fonts/final_fantasy_vii-webfont.woff') format('woff'),
+         url('../fonts/final_fantasy_vii-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+

@@ -39,12 +39,13 @@ div.ff7-window:after {
 .ff7-window p {
   color: #eff1ff;
   text-shadow: 2px 2px #212421, 1px 1px #212021;
-  font-family: Verdana, sans-serif;
-  font-size: 20px;
+  font-family: "final_fantasy_viiregular", Verdana, sans-serif;
+  font-size: 1em;
   font-weight: normal;
-  margin: 4px 0;
+  margin: 4px 0 0 0;
   z-index: 4;
   position: relative;
+  height: 1.3em;
 }
 
 body {

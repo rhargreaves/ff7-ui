@@ -1,0 +1,22 @@
+{
+  "name": "ff7-ui",
+  "version": "1.0.0",
+  "description": "FF7 style captions and sounds in the browser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhargreaves/ff7-ui.git"
+  },
+  "author": "Robert Hargreaves",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rhargreaves/ff7-ui/issues"
+  },
+  "homepage": "https://github.com/rhargreaves/ff7-ui#readme",
+  "dependencies": {
+    "handlebars": "^4.0.3"
+  }
+}

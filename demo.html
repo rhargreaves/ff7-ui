@@ -1,30 +1,103 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-  <link rel="stylesheet" type="text/css" href="resources/css/ff7-ui.css">
-  <link rel="stylesheet" type="text/css" href="resources/css/ff7-ui-fonts.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js"></script>
-</head>
-<body>
-
-  <div class="ff7-text background">
-    ...Who are you?...
-  </div>
-
-  <div class="ff7-window">
-    <h1>Aeris</h1>
-    <p>&ldquo;This guy are sick.&rdquo;</p>
-    <img style="transform:scale(1.5);" src="resources/images/finger.png" alt="--&gt;" />
-  </div>
-
-    <div class="ff7-window" style="width: 300px">
-      <p>&ldquo;Hey, Cloud.<br>...What should we do?&rdquo;</p>
-        <ul>
-          <li class="selected">Let's bust on in!</li>
-          <li class="selected">Let's sneak in quietly</li>
-        </ul>
-    </div>
+	<head>
+		<link rel="stylesheet" type="text/css" href="resources/css/ff7-ui.css">
+		<link rel="stylesheet" type="text/css" href="resources/css/ff7-ui-fonts.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js"></script>
+		<script>
 
 
-</body>
+function wrapNode(node) {
+	if(node.nodeType == 3 && node.textContent.trim().length !== 0) {
+		wrapTextNode(node);
+	} 
+	else 
+	{
+		var childNodes = [];
+		for(var i = 0; i<node.childNodes.length; i++) {
+			childNodes.push(node.childNodes[i]);
+		}
+		childNodes.forEach(function(node) {
+			wrapNode(node);
+		});
+	}
+}
+
+function wrapTextNode(textNode) {
+	var spanNode = document.createElement('span');
+	spanNode.setAttribute('class', 'text hidden');
+	var newTextNode = document.createTextNode(textNode.textContent);
+	spanNode.appendChild(newTextNode);
+	textNode.parentNode.replaceChild(spanNode, textNode);
+	var visibleSpanNode = document.createElement('span');
+	visibleSpanNode.setAttribute('class', 'text visible');
+	spanNode.parentNode.insertBefore(visibleSpanNode, spanNode);
+}
+
+function wrapAllFF7TextNodes() {
+	var nodes = document.querySelectorAll('.ff7-window');
+	for (var i = 0; i < nodes.length; i++) {
+		// do something with myNodeList[i]
+		var node = nodes[i];
+		wrapNode(node);
+	}
+}
+
+function animateText(callback) {
+	wrapAllFF7TextNodes(); 
+	var windows = document.querySelectorAll('.ff7-window');
+	var animationsCompleted = 0;
+	for(var i = 0; i<windows.length; i++) {
+		animateWindowText(windows[i], function() {
+			animationsCompleted++;
+			if(animationsCompleted == windows.length) {
+				callback();
+			}
+		});
+	}
+}
+
+function animateWindowText(window, callback) {
+	var visibleSpans = window.querySelectorAll('.text.visible');
+	var index = 0;
+	var timeout = setInterval(function() {
+		var visibleSpan = visibleSpans[index];
+		var invisibleSpan = visibleSpan.nextSibling;
+		if(invisibleSpan.textContent.length != 0) {
+			var nextChar = invisibleSpan.textContent.substring(0, 1);
+			visibleSpan.textContent += nextChar;
+			invisibleSpan.textContent = invisibleSpan.textContent.substring(1, invisibleSpan.textContent.length);
+		} else {
+			index++;
+			if(index == visibleSpans.length) {
+				clearTimeout(timeout);
+				callback();
+			}
+		}
+	}, 12);
+}
+		</script>
+	</head>
+	<body>
+
+		<div class="ff7-text background">
+			...Who are you?...
+		</div>
+
+		<div class="ff7-window">
+			<h1>Aeris</h1>
+			<p>&ldquo;This guy are sick.&rdquo;</p>
+			<img style="transform:scale(1.5);" src="resources/images/finger.png" alt="--&gt;" />
+		</div>
+
+		<div class="ff7-window" style="width: 300px">
+			<p>&ldquo;Hey, Cloud.<br>...What should we do?&rdquo;</p>
+			<ul>
+				<li class="selected">Let's bust on in!</li>
+				<li class="selected">Let's sneak in quietly</li>
+			</ul>
+		</div>
+
+
+	</body>
 </html>

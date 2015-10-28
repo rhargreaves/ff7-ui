@@ -41,6 +41,11 @@ div.ff7-window:after {
   position: relative;
 }
 
+.ff7-window .text.hidden {
+	visibility: hidden;
+	/* color: red; */
+}
+
 body {
  vertical-align: top;
 

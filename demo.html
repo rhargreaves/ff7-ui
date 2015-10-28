@@ -71,6 +71,10 @@ function animateWindowText(window, callback) {
 			index++;
 			if(index == visibleSpans.length) {
 				clearTimeout(timeout);
+				var selection = window.querySelector('li.invisible.selected');
+				if(selection) {
+					selection.classList.remove('invisible');
+				}
 				callback();
 			}
 		}
@@ -87,17 +91,19 @@ function animateWindowText(window, callback) {
 		<div class="ff7-window">
 			<h1>Aeris</h1>
 			<p>&ldquo;This guy are sick.&rdquo;</p>
-			<img style="transform:scale(1.5);" src="resources/images/finger.png" alt="--&gt;" />
 		</div>
 
 		<div class="ff7-window" style="width: 300px">
+			<h1>Tifa</h1>
 			<p>&ldquo;Hey, Cloud.<br>...What should we do?&rdquo;</p>
 			<ul>
-				<li class="selected">Let's bust on in!</li>
-				<li class="selected">Let's sneak in quietly</li>
+				<li class="selected invisible">Let's bust on in!</li>
+				<li>Let's sneak in quietly</li>
 			</ul>
 		</div>
 
-
+		<script>
+			animateText(function() {});
+		</script>
 	</body>
 </html>

@@ -63,6 +63,10 @@ body {
   background-size: 36px;
 }
 
+.ff7-window li.selected.invisible {
+	background: none;
+}
+
 .ff7-text,
 .ff7-window h1,
 .ff7-window p,

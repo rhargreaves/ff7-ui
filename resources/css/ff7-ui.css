@@ -9,6 +9,7 @@ div.ff7-window {
   position: relative;
   display: inline-block;
   z-index: 1;
+  outline: none;
 }
 
 div.ff7-window:before,

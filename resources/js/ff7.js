@@ -34,15 +34,31 @@ function wrapAllFF7TextNodes() {
 	}
 }
 
-function animateText(callback) {
+function initPage() {
+	animateAllWindows(null, function(ff7Window) {
+		enableSelections(ff7Window);
+	});
+}
+
+function enableSelections(ff7Window) {
+	ff7Window.addEventListener('keydown', function() {
+		var audio = new Audio('resources/sounds/menu_select.mp3');
+		audio.play();
+	});
+}
+
+function animateAllWindows(onComplete, onWindowComplete) {
 	wrapAllFF7TextNodes();
 	var windows = document.querySelectorAll('.ff7-window');
 	var animationsCompleted = 0;
 	for(var i = 0; i<windows.length; i++) {
-		animateWindowText(windows[i], function() {
+		var ff7win = windows[i];
+		animateWindowText(ff7win, function() {
+			onWindowComplete(ff7win);
 			animationsCompleted++;
 			if(animationsCompleted == windows.length) {
-				callback();
+				if(onComplete)
+					onComplete();
 			}
 		});
 	}

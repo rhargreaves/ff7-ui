@@ -101,6 +101,10 @@ body {
   margin-left: -300px;
 }
 
+.ff7-window.shinra-bld-dialogue {
+ width: 275px;
+}
+
 body {
   background: black;
 }

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="resources/css/ff7-ui.css">
-		<link rel="stylesheet" type="text/css" href="resources/css/ff7-ui-fonts.css">
+		<!--<link rel="stylesheet" type="text/css" href="resources/css/ff7-ui-fonts.css">-->
 	</head>
 	<body>
 
@@ -13,15 +13,15 @@
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.runtime.min.js"></script>
 		<script src="resources/js/handlebars-helper.js"></script>
-		<script src="resources/js/ff7-obj.js"></script>
-		<script src="resources/js/ff7-audio.js"></script>
 		<script src="resources/js/ff7.js"></script>
+		<script src="resources/js/ff7-audio.js"></script>
 		<script src="resources/js/templates.js"></script>
 		<script>
 
 	ff7.create({ character: 'Aeris', text: '“This guy are sick.”' });
 	ff7.create({
 		character: 'Tifa',
+		className: 'shinra-bld-dialogue',
 		text: '“Hey, Cloud.\n...What should we do?”',
 		options: [
 			{ text: "Let's bust on in!" },

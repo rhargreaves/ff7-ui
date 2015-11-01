@@ -1,3 +1,4 @@
+
 div.ff7-window {
   border: solid 2px #424542;
   border-radius: 7px;
@@ -10,6 +11,7 @@ div.ff7-window {
   display: inline-block;
   z-index: 1;
   outline: none;
+  overflow: hidden;
 }
 
 div.ff7-window:before,

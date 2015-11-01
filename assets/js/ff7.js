@@ -57,13 +57,14 @@
 		if(visibleSpans.length == 0)
 			return;
 		var index = 0;
+		var charsToWritePerFrame = 1;
 		var timeout = setInterval(function() {
 			var visibleSpan = visibleSpans[index];
 			var invisibleSpan = visibleSpan.nextSibling;
 			if(invisibleSpan.textContent.length != 0) {
-				var nextChar = invisibleSpan.textContent.substring(0, 1);
+				var nextChar = invisibleSpan.textContent.substring(0, charsToWritePerFrame);
 				visibleSpan.textContent += nextChar;
-				invisibleSpan.textContent = invisibleSpan.textContent.substring(1, invisibleSpan.textContent.length);
+				invisibleSpan.textContent = invisibleSpan.textContent.substring(charsToWritePerFrame, invisibleSpan.textContent.length);
 			} else {
 				index++;
 				if(index == visibleSpans.length) {
@@ -79,6 +80,40 @@
 		}, 12);
 	}
 
+	function growWindow(element, onComplete) {
+		var style = getComputedStyle(element);
+		var originalWidth = parseInt(style.width);
+		var originalHeight = parseInt(style.height);
+		var originalMarginLeft = parseInt(style.marginLeft);
+		var originalMarginRight = parseInt(style.marginRight);
+		var originalMarginTop = parseInt(style.marginTop);
+		var originalMarginBottom = parseInt(style.marginBottom);
+		var scaleFactors = [0.1, 0.2, 0.3, 0.4, 0.6, 0.8, 1];
+		var scaleFactorsIndex = 0;
+		var timeout = setInterval(function() {
+			var width = originalWidth * scaleFactors[scaleFactorsIndex];
+		  var height = originalHeight * scaleFactors[scaleFactorsIndex];
+			var newWidthMargin = (originalWidth - width) / 2;
+			var newHeightMargin = (originalHeight - height) / 2;
+			element.style.marginLeft = (originalMarginLeft + newWidthMargin) + 'px';
+			element.style.marginRight = (originalMarginRight + newWidthMargin) + 'px';
+			element.style.marginTop = (originalMarginTop + newHeightMargin) + 'px';
+			element.style.marginBottom = (originalMarginBottom + newHeightMargin) + 'px';
+			element.style.width = width + 'px';
+			element.style.height = height + 'px';
+			element.style.visibility = '';
+			scaleFactorsIndex++;
+			if(scaleFactorsIndex === scaleFactors.length) {
+				clearTimeout(timeout);
+				element.style.margin = '';
+				element.style.width = '';
+				element.style.height = '';
+				if(onComplete)
+					onComplete();
+			}
+		}, 35);
+	}
+
 	create = function(model) {
 		var template = Handlebars.templates['ff7-window.hbs'];
 		var html = template(model);
@@ -89,10 +124,14 @@
 			element.classList.add(model.className);
 		element.innerHTML = html;
 		wrapNode(element);
+		element.style.visibility = 'hidden';
 		document.body.appendChild(element);
-		animateWindowText(element, function() {
-			enableSelections(element);
+		growWindow(element, function() {
+			animateWindowText(element, function() {
+				enableSelections(element);
+			});
 		});
+
 	};
 
 	window.ff7 = {

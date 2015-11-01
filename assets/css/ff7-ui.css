@@ -12,6 +12,7 @@ div.ff7-window {
   z-index: 1;
   outline: none;
   overflow: hidden;
+  float: center;
 }
 
 div.ff7-window:before,

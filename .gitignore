@@ -28,3 +28,4 @@ build/Release
 node_modules
 
 assets/js/templates.js
+assets/js/underscore.min.js

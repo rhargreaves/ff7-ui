@@ -1,9 +1,15 @@
-all: templates
+all: build
 
-templates: assets/js/templates.js
+build: npm assets/js/templates.js assets/js/underscore.min.js
+
+npm:
+	npm install
 
 assets/js/templates.js:
 	handlebars resources/templates/*.hbs -f assets/js/templates.js
+
+assets/js/underscore.min.js:
+	ln ./node_modules/underscore/underscore-min.js assets/js/underscore.min.js
 
 clean:
 	rm assets/js/templates.js

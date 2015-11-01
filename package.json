@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rhargreaves/ff7-ui#readme",
   "dependencies": {
-    "handlebars": "^4.0.3"
+    "handlebars": "^4.0.3",
+    "underscore": "^1.8.3"
   }
 }

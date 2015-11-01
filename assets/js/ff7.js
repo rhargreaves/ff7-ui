@@ -28,7 +28,7 @@
 	}
 
 	function enableSelections(ff7Window) {
-		ff7Window.addEventListener('keydown', function(e) {
+		ff7Window.addEventListener('keydown', _.throttle(function(e) {
 			var KEY_CODE_UP = 38;
 			var KEY_CODE_DOWN = 40;
 			var KEY_CODE_ESC = 27;
@@ -43,7 +43,7 @@
 				var next = current.nextElementSibling || current.parentNode.firstElementChild;
 				moveFinger(current, next);
 			}
-		});
+		}, 100, {trailing: false}));
 	}
 
 	function moveFinger(currentNode, newNode) {

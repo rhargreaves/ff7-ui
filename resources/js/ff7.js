@@ -27,31 +27,32 @@ function wrapTextNode(textNode) {
 }
 
 function enableSelections(ff7Window) {
-	ff7Window.addEventListener('keydown', function() {
-		var audio = new Audio('resources/sounds/menu_select.mp3');
-		audio.play();
+	ff7Window.addEventListener('keydown', function(e) {
+		var KEY_CODE_UP = 38;
+		var KEY_CODE_DOWN = 40;
+		var KEY_CODE_ESC = 27;
+		var KEY_CODE_ENTER = 13;
+		var current = ff7Window.querySelector('li.selected');
+		if(!current)
+			return;
+		if(e.keyCode === KEY_CODE_UP) {
+			var prev = current.previousElementSibling || current.parentNode.lastElementChild;
+			moveFinger(current, prev);
+		} else if(e.keyCode == KEY_CODE_DOWN) {
+			var next = current.nextElementSibling || current.parentNode.firstElementChild;
+			moveFinger(current, next);
+		}
 	});
 }
 
-function animateAllWindows(onComplete, onWindowComplete) {
-	wrapAllFF7TextNodes();
-	var windows = document.querySelectorAll('.ff7-window');
-	var animationsCompleted = 0;
-	for(var i = 0; i<windows.length; i++) {
-		var ff7win = windows[i];
-		animateWindowText(ff7win, function() {
-			onWindowComplete(ff7win);
-			animationsCompleted++;
-			if(animationsCompleted == windows.length) {
-				if(onComplete)
-					onComplete();
-			}
-		});
-	}
+function moveFinger(currentNode, newNode) {
+	currentNode.classList.remove('selected');
+	newNode.classList.add('selected');
+	ff7.audio.playMenuSelect();
 }
 
-function animateWindowText(window, callback) {
-	var visibleSpans = window.querySelectorAll('.text.visible');
+function animateWindowText(ff7Window, callback) {
+	var visibleSpans = ff7Window.querySelectorAll('.text.visible');
 	if(visibleSpans.length == 0)
 		return;
 	var index = 0;
@@ -66,9 +67,10 @@ function animateWindowText(window, callback) {
 			index++;
 			if(index == visibleSpans.length) {
 				clearTimeout(timeout);
-				var selection = window.querySelector('li.invisible.selected');
+				var selection = ff7Window.querySelector('li');
 				if(selection) {
-					selection.classList.remove('invisible');
+					selection.classList.add('selected');
+					ff7Window.focus();
 				}
 				callback();
 			}

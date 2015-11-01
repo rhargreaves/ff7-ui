@@ -12,23 +12,22 @@
 		</div>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.runtime.min.js"></script>
-		<script src="resources/js/ff7.js"></script>
+		<script src="resources/js/handlebars-helper.js"></script>
 		<script src="resources/js/ff7-obj.js"></script>
+		<script src="resources/js/ff7-audio.js"></script>
+		<script src="resources/js/ff7.js"></script>
 		<script src="resources/js/templates.js"></script>
 		<script>
 
-document.addEventListener("DOMContentLoaded", function() {
-
 	ff7.create({ character: 'Aeris', text: '“This guy are sick.”' });
-	ff7.create({ 
+	ff7.create({
 		character: 'Tifa',
-		text: '“Hey, Cloud.\n...What should we do?”', 
+		text: '“Hey, Cloud.\n...What should we do?”',
 		options: [
-		{ text: "Let's bust on in!" },
-		{ text: "Let's sneak in quietly" }
-		]});	
+			{ text: "Let's bust on in!" },
+			{ text: "Let's sneak in quietly" }
+	]});
 
-});
 		</script>
 	</body>
 </html>

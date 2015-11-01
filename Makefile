@@ -1,9 +1,9 @@
 all: templates
 
-templates: resources/js/templates.js
+templates: assets/js/templates.js
 
-resources/js/templates.js:
-	handlebars resources/templates/*.hbs -f resources/js/templates.js
+assets/js/templates.js:
+	handlebars resources/templates/*.hbs -f assets/js/templates.js
 
 clean:
-	rm resources/js/templates.js
+	rm assets/js/templates.js

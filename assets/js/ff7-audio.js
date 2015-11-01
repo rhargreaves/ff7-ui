@@ -1,10 +1,10 @@
 (function(window) {
 
-  var menuSelect = new Audio('resources/sounds/menu_select.mp3');
-  var menuLeave = new Audio('resources/sounds/menu_leave.mp3');
-  var menuStart = new Audio('resources/sounds/menu_start.mp3');
-  var menuError = new Audio('resources/sounds/menu_error.mp3');
-  var menuDisplay = new Audio('resources/sounds/menu_display.mp3');
+  var menuSelect = new Audio('assets/audio/menu_select.mp3');
+  var menuLeave = new Audio('assets/audio/menu_leave.mp3');
+  var menuStart = new Audio('assets/audio/menu_start.mp3');
+  var menuError = new Audio('assets/audio/menu_error.mp3');
+  var menuDisplay = new Audio('assets/audio/menu_display.mp3');
 
   function play(audio) {
       audio.currentTime = 0;

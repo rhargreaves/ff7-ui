@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
+		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="resources/css/ff7-ui.css">
 		<link rel="stylesheet" type="text/css" href="resources/css/ff7-ui-fonts.css">
-		<script src="resources/js/ff7.js"></script>
 	</head>
 	<body>
 
@@ -11,22 +11,24 @@
 			...Who are you?...
 		</div>
 
-		<div class="ff7-window">
-			<h1>Aeris</h1>
-			<p>&ldquo;This guy are sick.&rdquo;</p>
-		</div>
-
-		<div class="ff7-window" style="width: 300px" tabindex="0">
-			<h1>Tifa</h1>
-			<p>&ldquo;Hey, Cloud.<br>...What should we do?&rdquo;</p>
-			<ul>
-				<li class="selected invisible">Let's bust on in!</li>
-				<li>Let's sneak in quietly</li>
-			</ul>
-		</div>
-
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.runtime.min.js"></script>
+		<script src="resources/js/ff7.js"></script>
+		<script src="resources/js/ff7-obj.js"></script>
+		<script src="resources/js/templates.js"></script>
 		<script>
-			initPage();
+
+document.addEventListener("DOMContentLoaded", function() {
+
+	ff7.create({ character: 'Aeris', text: '“This guy are sick.”' });
+	ff7.create({ 
+		character: 'Tifa',
+		text: '“Hey, Cloud.\n...What should we do?”', 
+		options: [
+		{ text: "Let's bust on in!" },
+		{ text: "Let's sneak in quietly" }
+		]});	
+
+});
 		</script>
 	</body>
 </html>

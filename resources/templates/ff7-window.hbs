@@ -1,0 +1,13 @@
+{{#if character}}
+<h1>{{character}}</h1>
+{{/if}}
+{{#if text}}
+<p>{{breaklines text}}</p>
+{{/if}}
+{{#if options}}
+<ul>
+	{{#each options}}
+	<li>{{breaklines text}}</li>
+	{{/each}}
+</ul>
+{{/if}}

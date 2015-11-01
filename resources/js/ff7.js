@@ -26,20 +26,6 @@ function wrapTextNode(textNode) {
 	spanNode.parentNode.insertBefore(visibleSpanNode, spanNode);
 }
 
-function wrapAllFF7TextNodes() {
-	var nodes = document.querySelectorAll('.ff7-window');
-	for (var i = 0; i < nodes.length; i++) {
-		var node = nodes[i];
-		wrapNode(node);
-	}
-}
-
-function initPage() {
-	animateAllWindows(null, function(ff7Window) {
-		enableSelections(ff7Window);
-	});
-}
-
 function enableSelections(ff7Window) {
 	ff7Window.addEventListener('keydown', function() {
 		var audio = new Audio('resources/sounds/menu_select.mp3');
@@ -66,6 +52,8 @@ function animateAllWindows(onComplete, onWindowComplete) {
 
 function animateWindowText(window, callback) {
 	var visibleSpans = window.querySelectorAll('.text.visible');
+	if(visibleSpans.length == 0)
+		return;
 	var index = 0;
 	var timeout = setInterval(function() {
 		var visibleSpan = visibleSpans[index];

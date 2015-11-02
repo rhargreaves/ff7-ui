@@ -3,7 +3,7 @@ div.ff7-window {
   border: solid 2px #424542;
   border-radius: 7px;
   box-shadow: 1px 1px #e7dfe7, -1px -1px #e7dfe7, 1px -1px #e7dfe7, -1px 1px #e7dfe7, 0 -2px #9c9a9c, -2px 0 #7b757b, 0 2px #424542;
-  padding: 5px 10px;
+  padding: 2px 10px 4px 10px;
   margin: 2px;
   background: linear-gradient(45deg, /* BL */ rgb(0, 0, 80), /* TR */ rgb(0, 0, 128));
   min-height: 100%;
@@ -12,7 +12,7 @@ div.ff7-window {
   z-index: 1;
   outline: none;
   overflow: hidden;
-  float: center;
+  float: left;
 }
 
 div.ff7-window:before,
@@ -47,24 +47,26 @@ div.ff7-window:after {
 
 .ff7-window .text.hidden {
 	visibility: hidden;
-	/* color: red; */
 }
 
 body {
  vertical-align: top;
-
 }
 
+.ff7-window p {
+  text-indent: -1em;
+  padding-left: 1em;
+}
 
 .ff7-window h1,
 .ff7-window p,
 .ff7-window ul {
-  margin: 10px 0 0 0;
+  margin: 0 0 0 0;
 }
 
 .ff7-window li.selected {
-  background: url("../images/finger.png") no-repeat 0px 0px;
-  background-size: 36px;
+  background: url("../images/finger.png") no-repeat 0px 5px;
+  background-size: 40px;
 }
 
 .ff7-window li.selected.invisible {
@@ -80,18 +82,18 @@ body {
   font-family: /* "final_fantasy_viiregular", */ Verdana, sans-serif;
   font-weight: normal;
   font-size: 1em;
-  line-height: 1.5em;
+  line-height: 1.7em;
 }
 
 .ff7-window ul {
   list-style: none;
-  margin-left: 0;
-  padding-left: 3em;
+  margin-left: -7px;
+  padding-left: 3.4em;
 }
 
 .ff7-window li {
-  padding-left: 3em;
-  margin-left: -3em;
+  padding-left: 3.4em;
+  margin-left: -3.4em;
 }
 
 .ff7-text.background {

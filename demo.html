@@ -19,13 +19,19 @@
 		<script src="assets/js/underscore.min.js"></script>
 		<script>
 
-	ff7.create({ character: 'Aeris', text: '“This guy are sick.”' });
-	ff7.create({
+	ff7.show({ character: 'Aeris', text: '“This guy are sick.”' });
+	ff7.show({
 		className: 'shinra-bld-dialogue',
 		text: '“Hey, Cloud.\n...What should we do?”',
 		options: [
-			{ text: "Let's bust on in!" },
-			{ text: "Let's sneak in quietly" }
+		{ 
+			text: "Let's bust on in!", 
+			action: function() { alert('hey!'); }
+		},
+		{ 
+			text: "Let's sneak in quietly",
+			action: function() { alert('quietly!'); }
+		}
 	]});
 
 		</script>

@@ -42,6 +42,8 @@
 			} else if(e.keyCode == KEY_CODE_DOWN) {
 				var next = current.nextElementSibling || current.parentNode.firstElementChild;
 				moveFinger(current, next);
+			} else if(e.keyCode == KEY_CODE_ENTER) {
+
 			}
 		}, 100, {trailing: false}));
 	}
@@ -114,7 +116,7 @@
 		}, 35);
 	}
 
-	create = function(model) {
+	show = function(model) {
 		var template = Handlebars.templates['ff7-window.hbs'];
 		var html = template(model);
 		var element = document.createElement('div');
@@ -126,6 +128,7 @@
 		wrapNode(element);
 		element.style.visibility = 'hidden';
 		document.body.appendChild(element);
+
 		growWindow(element, function() {
 			animateWindowText(element, function() {
 				enableSelections(element);
@@ -135,7 +138,7 @@
 	};
 
 	window.ff7 = {
-		create: create
+		show: show
 	}
 
 })(window);

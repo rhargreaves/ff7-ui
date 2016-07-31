@@ -1,11 +1,26 @@
 
 @font-face {
     font-family: 'final_fantasy_viiregular';
-    src: url('../fonts/final_fantasy_vii-webfont.eot');
-    src: url('../fonts/final_fantasy_vii-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/final_fantasy_vii-webfont.woff2') format('woff2'),
-         url('../fonts/final_fantasy_vii-webfont.woff') format('woff'),
-         url('../fonts/final_fantasy_vii-webfont.ttf') format('truetype');
+    src: url('../fonts/FinalFantasyVII.woff') format('woff');
     font-weight: normal;
     font-style: normal;
+}
+
+.ff7-text,
+.ff7-window h1,
+.ff7-window p,
+.ff7-window li {
+	font-family: "final_fantasy_viiregular", Verdana, sans-serif;
+  font-size: 2.5em;
+  line-height: 0.65em;
+}
+
+.ff7-window li {
+	padding-left: 1.35em;
+	margin-left: -1.35em;
+}
+
+.ff7-window p {
+	text-indent: -0.48em;
+	padding-left: 0.48em;
 }

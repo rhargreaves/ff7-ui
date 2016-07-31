@@ -7,7 +7,7 @@
 {{#if options}}
 <ul>
 	{{#each options}}
-	<li>{{breaklines text}}</li>
+	<li {{bind-attr data-test=text}}>{{breaklines text}}</li>
 	{{/each}}
 </ul>
 {{/if}}

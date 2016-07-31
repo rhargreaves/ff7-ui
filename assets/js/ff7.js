@@ -128,7 +128,6 @@
 		wrapNode(element);
 		element.style.visibility = 'hidden';
 		document.body.appendChild(element);
-
 		growWindow(element, function() {
 			animateWindowText(element, function() {
 				enableSelections(element);

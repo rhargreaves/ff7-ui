@@ -24,3 +24,7 @@
 	text-indent: -0.48em;
 	padding-left: 0.48em;
 }
+
+.ff7-window li.selected {
+  background-position-y: 2px;
+}

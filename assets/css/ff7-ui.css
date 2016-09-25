@@ -49,6 +49,11 @@ div.ff7-window:after {
 	visibility: hidden;
 }
 
+.ff7-window .text.visible {
+	position: absolute;
+	text-indent: 0em;
+}
+
 body {
 	vertical-align: top;
 }

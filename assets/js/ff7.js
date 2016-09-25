@@ -63,10 +63,10 @@
 		var timeout = setInterval(function() {
 			var visibleSpan = visibleSpans[index];
 			var invisibleSpan = visibleSpan.nextSibling;
-			if(invisibleSpan.textContent.length != 0) {
-				var nextChar = invisibleSpan.textContent.substring(0, charsToWritePerFrame);
+			if(invisibleSpan.textContent.length != visibleSpan.textContent.length) {
+				var nextChar = invisibleSpan.textContent.substr(
+					visibleSpan.textContent.length, charsToWritePerFrame);
 				visibleSpan.textContent += nextChar;
-				invisibleSpan.textContent = invisibleSpan.textContent.substring(charsToWritePerFrame, invisibleSpan.textContent.length);
 			} else {
 				index++;
 				if(index == visibleSpans.length) {

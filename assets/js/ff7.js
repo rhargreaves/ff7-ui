@@ -1,5 +1,15 @@
 (function(window) {
 
+	function escapeHtml(str) {
+	    var div = document.createElement('div');
+	    div.appendChild(document.createTextNode(str));
+	    return div.innerHTML;
+	}
+
+	function breakLines(str) {
+		return escapeHtml(str).replace(/(\r\n|\n|\r)/gm, '<br>');
+	}
+
 	function wrapNode(node) {
 		if(node.nodeType == 3 && node.textContent.trim().length !== 0) {
 			wrapTextNode(node);
@@ -117,14 +127,32 @@
 	}
 
 	show = function(model) {
-		var template = Handlebars.templates['ff7-window.hbs'];
-		var html = template(model);
 		var element = document.createElement('div');
 		element.className = 'ff7-window';
+		element.id = model.id;
+		if(model.character) {
+				var characterHeader = document.createElement('h1');
+				characterHeader.innerHTML = breakLines(model.character);
+				element.appendChild(characterHeader);
+		}
+		if(model.text) {
+				var textElement = document.createElement('p');
+				textElement.innerHTML = breakLines(model.text);
+				element.appendChild(textElement);
+		}
+		if(model.options) {
+				var optionsElement = document.createElement('ul');
+				model.options.forEach(function(option) {
+					var optionElement = document.createElement('li');
+					optionElement.innerHTML = breakLines(option.text || option);
+					optionsElement.appendChild(optionElement);
+				})
+				element.appendChild(optionsElement);
+		}
+
 		element.setAttribute('tabindex', 0);
 		if(model.className)
 			element.classList.add(model.className);
-		element.innerHTML = html;
 		wrapNode(element);
 		element.style.visibility = 'hidden';
 		document.body.appendChild(element);

@@ -1,13 +1,14 @@
-
 #aeris-quote {
-    top: 40px;
-    left: 10%;
+  top: 40px;
+  left: 10%;
+  position: absolute;
 }
 
 #shinra-bld-dialogue {
-	width: 275px;
-  top: 200px;
-  display: block;
+  width: 275px;
+  top: 300px;
   margin-left: auto;
   margin-right: auto;
+  position: relative;
+  display: block;
 }

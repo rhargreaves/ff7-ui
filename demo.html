@@ -17,25 +17,31 @@
 		<script src="assets/js/underscore.min.js"></script>
 		<script>
 
-	ff7.show({
-		 character: 'Aeris',
-		 text: '“This guy are sick.”',
-		 id: 'aeris-quote'
-	 });
+			function showDialogues() {
+				ff7.show({
+					 character: 'Aeris',
+					 text: '“This guy are sick.”',
+					 id: 'aeris-quote'
+				 });
 
-	ff7.show({
-		id: 'shinra-bld-dialogue',
-		text: '“Hey, Cloud.\n...What should we do?”',
-		options: [
-		{
-			text: "Let's bust on in!",
-			action: function() { alert('hey!'); }
-		},
-		{
-			text: "Let's sneak in quietly",
-			action: function() { alert('quietly!'); }
-		}
-	]});
+				ff7.show({
+					id: 'shinra-bld-dialogue',
+					text: '“Hey, Cloud.\n...What should we do?”',
+					options: [
+					{
+						text: "Let's bust on in!",
+						action: function() { alert('hey!'); }
+					},
+					{
+						text: "Let's sneak in quietly",
+						action: function() { alert('quietly!'); }
+					}
+				]});
+			}
+
+			// workaround to wait for font to load as dialogue
+			// box are incorrectly sized if it loads after
+			window.setTimeout(showDialogues, 250);
 
 		</script>
 	</body>

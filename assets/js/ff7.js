@@ -1,5 +1,7 @@
 (function(window) {
 
+  ANIMATION_SPEED = 35;
+
 	function escapeHtml(str) {
 		var div = document.createElement('div');
 		div.appendChild(document.createTextNode(str));
@@ -93,43 +95,53 @@
 		}
 
 		function growWindow(element, onComplete) {
-			var style = getComputedStyle(element);
-			var originalWidth = parseInt(style.width);
-			var originalHeight = parseInt(style.height);
-			var originalMarginLeft = parseInt(style.marginLeft);
-			var originalMarginRight = parseInt(style.marginRight);
-			var originalMarginTop = parseInt(style.marginTop);
-			var originalMarginBottom = parseInt(style.marginBottom);
-			var scaleFactors = [0.1, 0.2, 0.3, 0.4, 0.6, 0.8, 1];
+			var pos = element.getBoundingClientRect()
+			var originalLeft = pos.left;
+			var originalTop = pos.top;
+			var originalWidth = pos.right - pos.left;
+			var originalHeight = pos.bottom - pos.top;
+			var scaleFactors = [0.1, 0.3, 0.55, 0.80, 1];
 			var scaleFactorsIndex = 0;
 			var timeout = setInterval(function() {
 				var width = originalWidth * scaleFactors[scaleFactorsIndex];
 				var height = originalHeight * scaleFactors[scaleFactorsIndex];
-				var newWidthMargin = (originalWidth - width) / 2;
-				var newHeightMargin = (originalHeight - height) / 2;
-				element.style.marginLeft = (originalMarginLeft + newWidthMargin) + 'px';
-				element.style.marginRight = (originalMarginRight + newWidthMargin) + 'px';
-				element.style.marginTop = (originalMarginTop + newHeightMargin) + 'px';
-				element.style.marginBottom = (originalMarginBottom + newHeightMargin) + 'px';
+				var horizontalMargin = (originalWidth - width) / 2;
+				var verticalMargin = (originalHeight - height) / 2;
+				element.style.position = 'absolute';
+				element.style.left = (originalLeft + horizontalMargin) + 'px';
+				element.style.top = (originalTop + verticalMargin) + 'px';
 				element.style.width = width + 'px';
 				element.style.height = height + 'px';
 				element.style.visibility = '';
 				scaleFactorsIndex++;
 				if(scaleFactorsIndex === scaleFactors.length) {
 					clearTimeout(timeout);
-					element.style.margin = '';
-					element.style.width = '';
-					element.style.height = '';
-					if(onComplete)
-					onComplete();
+					if(onComplete) {
+						onComplete();
+					}
 				}
-			}, 35);
+			}, ANIMATION_SPEED);
 		}
 
 		function createWindowDiv(model) {
 			var element = document.createElement('div');
 			element.className = 'ff7-window';
 			element.id = model.id;
+			var positionModel = model.position;
+			if(positionModel) {
+				if(positionModel.left) {
+					element.style.left = positionModel.left + 'px';
+				}
+				if(positionModel.top) {
+					element.style.top = positionModel.top + 'px';
+				}
+				if(positionModel.width) {
+					element.style.width = positionModel.width + 'px';
+				}
+				if(positionModel.height) {
+					element.style.height = positionModel.height + 'px';
+				}
+			}
 			if(model.character) {
 				var characterHeader = document.createElement('h1');
 				characterHeader.innerHTML = breakLines(model.character);

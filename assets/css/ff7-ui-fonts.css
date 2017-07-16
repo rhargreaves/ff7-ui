@@ -1,28 +1,24 @@
-
 @font-face {
-    font-family: 'final_fantasy_viiregular';
-    src: url('../fonts/FinalFantasyVII.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'final_fantasy_viiregular';
+  src: url('../fonts/FinalFantasyVII.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
-.ff7-text,
-.ff7-window h1,
-.ff7-window p,
-.ff7-window li {
-	font-family: "final_fantasy_viiregular", Verdana, sans-serif;
+.ff7-text, .ff7-window h1, .ff7-window p, .ff7-window li {
+  font-family: "final_fantasy_viiregular", Verdana, sans-serif;
   font-size: 2.5em;
   line-height: 0.7em;
 }
 
 .ff7-window li {
-	padding-left: 1.35em;
-	margin-left: -1.35em;
+  padding-left: 1.35em;
+  margin-left: -1.35em;
 }
 
 .ff7-window p {
-	text-indent: -0.48em;
-	padding-left: 0.48em;
+  text-indent: -0.48em;
+  padding-left: 0.48em;
 }
 
 .ff7-window li.selected {

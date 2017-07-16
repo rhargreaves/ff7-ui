@@ -1,6 +1,8 @@
 (function(window) {
 
-  ANIMATION_SPEED = 35;
+  ANIMATION_SPEED = 25;
+	TEXT_SPEED = 33;
+	CHARS_TO_WRITE_PER_FRAME = 4;
 
 	function escapeHtml(str) {
 		var div = document.createElement('div');
@@ -71,13 +73,12 @@
 		if(visibleSpans.length == 0)
 		return;
 		var index = 0;
-		var charsToWritePerFrame = 1;
 		var timeout = setInterval(function() {
 			var visibleSpan = visibleSpans[index];
 			var invisibleSpan = visibleSpan.nextSibling;
 			if(invisibleSpan.textContent.length != visibleSpan.textContent.length) {
 				var nextChar = invisibleSpan.textContent.substr(
-					visibleSpan.textContent.length, charsToWritePerFrame);
+					visibleSpan.textContent.length, CHARS_TO_WRITE_PER_FRAME);
 					visibleSpan.textContent += nextChar;
 				} else {
 					index++;
@@ -91,7 +92,7 @@
 						callback();
 					}
 				}
-			}, 12);
+			}, TEXT_SPEED);
 		}
 
 		function growWindow(element, onComplete) {
@@ -100,7 +101,7 @@
 			var originalTop = pos.top;
 			var originalWidth = pos.right - pos.left;
 			var originalHeight = pos.bottom - pos.top;
-			var scaleFactors = [0.1, 0.3, 0.55, 0.80, 1];
+			var scaleFactors = [0.25, 0.5, 0.75, 1];
 			var scaleFactorsIndex = 0;
 			var timeout = setInterval(function() {
 				var width = originalWidth * scaleFactors[scaleFactorsIndex];

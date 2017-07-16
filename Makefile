@@ -1,8 +1,6 @@
-all: build
+.PHONY: build clean
 
 build: npm assets/js/underscore.min.js
-
-npm:
 	npm install
 
 assets/js/underscore.min.js:

@@ -11,7 +11,7 @@
       audio.play();
   }
 
-	window.ff7.audio = {
+	window.FF7.audio = {
 		playMenuSelect: function() { play(menuSelect) },
 		playMenuLeave: function() { play(menuLeave) },
 		playMenuStart: function() { play(menuStart) },

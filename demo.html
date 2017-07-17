@@ -17,17 +17,18 @@
 		<script src="assets/js/underscore.min.js"></script>
 		<script>
 
-			function showDialogues() {
-				ff7.show({
-					 character: 'Aeris',
-					 text: '“This guy are sick.”',
-					 id: 'aeris-quote'
-				 });
+		function showDialogues() {
 
-				ff7.show({
-					id: 'shinra-bld-dialogue',
-					text: '“Hey, Cloud.\n...What should we do?”',
-					options: [
+			new FF7.Dialogue({
+				character: 'Aeris',
+				text: '“This guy are sick.”',
+				id: 'aeris-quote'
+			}).show();
+
+			new FF7.Dialogue({
+				id: 'shinra-bld-dialogue',
+				text: '“Hey, Cloud.\n...What should we do?”',
+				options: [
 					{
 						text: "Let's bust on in!",
 						action: function() { alert('hey!'); }
@@ -35,12 +36,13 @@
 					{
 						text: "Let's sneak in quietly",
 						action: function() { alert('quietly!'); }
-					}
-				]});
+					}]
+				}).show();
+
 			}
 
 			// workaround to wait for font to load as dialogue
-			// box are incorrectly sized if it loads after
+			// box are incorrectly sized if it loads after font
 			window.setTimeout(showDialogues, 250);
 
 		</script>

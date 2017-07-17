@@ -1,21 +1,28 @@
 (function(window) {
 
-  var menuSelect = 'assets/audio/menu_select.mp3';
-  var menuLeave = 'assets/audio/menu_leave.mp3';
-  var menuStart = 'assets/audio/menu_start.mp3';
-  var menuError = 'assets/audio/menu_error.mp3';
-  var menuDisplay = 'assets/audio/menu_display.mp3';
+  var sounds = {
+    menuSelect: new Audio('assets/audio/menu_select.mp3'),
+    menuLeave: new Audio('assets/audio/menu_leave.mp3'),
+    menuStart: new Audio('assets/audio/menu_start.mp3'),
+    menuError: new Audio('assets/audio/menu_error.mp3'),
+    menuDisplay: new Audio('assets/audio/menu_display.mp3')
+  }
+  
+  for (var key in sounds) {
+    var audio = sounds[key];
+    audio.load();
+  }
 
-  function play(url) {
-      new Audio(url).play();
+  function play(audio) {
+      new Audio(audio.src).play();
   }
 
 	window.FF7.audio = {
-		playMenuSelect: function() { play(menuSelect) },
-		playMenuLeave: function() { play(menuLeave) },
-		playMenuStart: function() { play(menuStart) },
-		playMenuError: function() { play(menuError) },
-		playMenuDisplay: function() { play(menuDisplay) }
+		playMenuSelect: function() { play(sounds.menuSelect) },
+		playMenuLeave: function() { play(sounds.menuLeave) },
+		playMenuStart: function() { play(sounds.menuStart) },
+		playMenuError: function() { play(sounds.menuError) },
+		playMenuDisplay: function() { play(sounds.menuDisplay) }
 	}
 
 })(window);

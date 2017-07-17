@@ -12,3 +12,9 @@
   position: relative;
   display: block;
 }
+
+#start-quote {
+  top: 40px;
+  right: 10%;
+  position: absolute;
+}

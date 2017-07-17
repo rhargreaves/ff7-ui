@@ -1,8 +1,8 @@
 (function(window) {
 
   ANIMATION_SPEED = 25;
-  TEXT_SPEED = 33;
-  CHARS_TO_WRITE_PER_FRAME = 4;
+  TEXT_SPEED = 1000 / 30;
+  CHARS_TO_WRITE_PER_FRAME = 2;
 
   function escapeHtml(str) {
     var div = document.createElement('div');
@@ -102,7 +102,7 @@
       var originalTop = pos.top;
       var originalWidth = pos.right - pos.left;
       var originalHeight = pos.bottom - pos.top;
-      var scaleFactors = [0.25, 0.5, 0.75, 1];
+      var scaleFactors = [0.2, 0.5, 0.75, 1];
       var scaleFactorsIndex = 0;
       var timeout = setInterval(function() {
         var width = originalWidth * scaleFactors[scaleFactorsIndex];

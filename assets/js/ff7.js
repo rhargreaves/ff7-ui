@@ -41,7 +41,7 @@
     spanNode.parentNode.insertBefore(visibleSpanNode, spanNode);
   }
 
-  function enableSelections(ff7Window) {
+  function enableSelections(ff7Window, self) {
     ff7Window.addEventListener('keydown', _.throttle(function(e) {
       var KEY_CODE_UP = 38;
       var KEY_CODE_DOWN = 40;
@@ -60,7 +60,9 @@
       } else if(e.keyCode == KEY_CODE_ENTER) {
         var option = current.ff7Option;
         if(option.action) {
-          option.action();
+          option.action(function() {
+            self.hide();
+          });
         }
       }
     }, 100, {trailing: false}));
@@ -179,7 +181,8 @@
     }
 
     Dialogue.prototype.show = function() {
-      var model = this.options;
+      var self = this;
+      var model = self.options;
       var element = createWindowDiv(model);
       wrapNode(element);
       element.style.visibility = 'hidden';
@@ -187,9 +190,13 @@
       model.element = element;
       growWindow(element, function() {
         animateWindowText(element, function() {
-          enableSelections(element);
+          enableSelections(element, self);
         });
       });
+    }
+
+    Dialogue.prototype.hide = function() {
+      alert('hide!');
     }
 
     window.FF7 = {

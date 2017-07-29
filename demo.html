@@ -36,11 +36,11 @@
 				options: [
 					{
 						text: "Let's bust on in!",
-						action: function() { alert('hey!'); }
+						action: function(next) { alert('hey!'); next(); }
 					},
 					{
 						text: "Let's sneak in quietly",
-						action: function() { alert('quietly!'); }
+						action: function(next) { alert('quietly!'); next(); }
 					}]
 				}).show();
 

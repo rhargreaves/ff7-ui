@@ -101,8 +101,23 @@
       }, TEXT_SPEED);
     }
 
+    function setWindowSize(element, originalLeft, originalTop,
+        originalWidth, originalHeight, scaleFactor) {
+      var width = originalWidth * scaleFactor;
+      var height = originalHeight * scaleFactor;
+      var horizontalMargin = (originalWidth - width) / 2;
+      var verticalMargin = (originalHeight - height) / 2;
+      element.style.position = 'absolute';
+      element.style.left = (originalLeft + horizontalMargin) + 'px';
+      element.style.top = (originalTop + verticalMargin) + 'px';
+      element.style.width = width + 'px';
+      element.style.height = height + 'px';
+      element.style.visibility = '';
+    }
+
     function growWindow(element, onComplete) {
       var pos = element.getBoundingClientRect()
+      element.ff7OriginalPos = pos;
       var originalLeft = pos.left;
       var originalTop = pos.top;
       var originalWidth = pos.right - pos.left;
@@ -110,16 +125,37 @@
       var scaleFactors = [0.2, 0.5, 0.75, 1];
       var scaleFactorsIndex = 0;
       var timeout = setInterval(function() {
-        var width = originalWidth * scaleFactors[scaleFactorsIndex];
-        var height = originalHeight * scaleFactors[scaleFactorsIndex];
-        var horizontalMargin = (originalWidth - width) / 2;
-        var verticalMargin = (originalHeight - height) / 2;
-        element.style.position = 'absolute';
-        element.style.left = (originalLeft + horizontalMargin) + 'px';
-        element.style.top = (originalTop + verticalMargin) + 'px';
-        element.style.width = width + 'px';
-        element.style.height = height + 'px';
-        element.style.visibility = '';
+        setWindowSize(element,
+          originalLeft,
+          originalTop,
+          originalWidth,
+          originalHeight,
+          scaleFactors[scaleFactorsIndex])
+        scaleFactorsIndex++;
+        if(scaleFactorsIndex === scaleFactors.length) {
+          clearTimeout(timeout);
+          if(onComplete) {
+            onComplete();
+          }
+        }
+      }, ANIMATION_SPEED);
+    }
+
+    function shrinkWindow(element, onComplete) {
+      var pos = element.ff7OriginalPos;
+      var originalLeft = pos.left;
+      var originalTop = pos.top;
+      var originalWidth = pos.right - pos.left;
+      var originalHeight = pos.bottom - pos.top;
+      var scaleFactors = [0.2, 0.5, 0.75, 1].reverse();
+      var scaleFactorsIndex = 0;
+      var timeout = setInterval(function() {
+        setWindowSize(element,
+          originalLeft,
+          originalTop,
+          originalWidth,
+          originalHeight,
+          scaleFactors[scaleFactorsIndex])
         scaleFactorsIndex++;
         if(scaleFactorsIndex === scaleFactors.length) {
           clearTimeout(timeout);
@@ -184,6 +220,7 @@
       var self = this;
       var model = self.options;
       var element = createWindowDiv(model);
+      self.element = element;
       wrapNode(element);
       element.style.visibility = 'hidden';
       document.body.appendChild(element);
@@ -196,7 +233,12 @@
     }
 
     Dialogue.prototype.hide = function() {
-      alert('hide!');
+      var self = this;
+      FF7.audio.playMenuLeave();
+      shrinkWindow(self.element, function() {
+        var element = self.element;
+        element.style.visibility = 'hidden';
+      })
     }
 
     window.FF7 = {

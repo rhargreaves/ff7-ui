@@ -19,30 +19,34 @@
 
 		function showDialogues() {
 
-			new FF7.Dialogue({
+			var dialog1 = new FF7.Dialogue({
 				text: '“C\'mon newcomer.\nFollow me.”',
 				id: 'start-quote'
-			}).show();
+			});
 
-			new FF7.Dialogue({
+			var dialog2 = new FF7.Dialogue({
 				character: 'Aeris',
 				text: '“This guy are sick.”',
 				id: 'aeris-quote'
-			}).show();
+			});
 
-			new FF7.Dialogue({
+			var dialog3 = new FF7.Dialogue({
 				id: 'shinra-bld-dialogue',
 				text: '“Hey, Cloud.\n...What should we do?”',
 				options: [
 					{
 						text: "Let's bust on in!",
-						action: function(next) { alert('hey!'); next(); }
+						action: function(next) { dialog1.hide(); next(); }
 					},
 					{
 						text: "Let's sneak in quietly",
-						action: function(next) { alert('quietly!'); next(); }
+						action: function(next) { dialog2.hide(); next(); }
 					}]
-				}).show();
+				});
+
+				dialog1.show();
+				dialog2.show();
+				dialog3.show();
 
 			}
 

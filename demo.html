@@ -36,11 +36,23 @@
 				options: [
 					{
 						text: "Let's bust on in!",
-						action: function(next) { dialog1.hide(); next(); }
+						action: function(next) {
+							dialog1.hide();
+							setTimeout(function() {
+								dialog1.show();
+								dialog3.show();
+							}, 1000);
+							next(); }
 					},
 					{
 						text: "Let's sneak in quietly",
-						action: function(next) { dialog2.hide(); next(); }
+						action: function(next) {
+							dialog2.hide();
+							setTimeout(function() {
+								dialog2.show();
+								dialog3.show();
+							}, 1000);
+							next(); }
 					}]
 				});
 

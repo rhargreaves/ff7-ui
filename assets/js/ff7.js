@@ -102,7 +102,7 @@
     }
 
     function setWindowSize(element, originalLeft, originalTop,
-        originalWidth, originalHeight, scaleFactor) {
+        originalWidth, originalHeight, scaleFactor, isShrinking) {
       var width = originalWidth * scaleFactor;
       var height = originalHeight * scaleFactor;
       var horizontalMargin = (originalWidth - width) / 2;
@@ -113,6 +113,14 @@
       element.style.width = width + 'px';
       element.style.height = height + 'px';
       element.style.visibility = '';
+      if(isShrinking) {
+        var contentElement = element.getElementsByTagName("div")[0];
+        contentElement.style.marginLeft = ((horizontalMargin) * -1) + 'px';
+        contentElement.style.marginTop = ((verticalMargin) * -1) + 'px';
+        contentElement.style.marginRight = contentElement.style.marginLeft;
+        contentElement.style.marginBottom = contentElement.style.marginTop;
+        console.log(contentElement);
+      }
     }
 
     function growWindow(element, onComplete) {
@@ -130,7 +138,8 @@
           originalTop,
           originalWidth,
           originalHeight,
-          scaleFactors[scaleFactorsIndex])
+          scaleFactors[scaleFactorsIndex],
+          false)
         scaleFactorsIndex++;
         if(scaleFactorsIndex === scaleFactors.length) {
           clearTimeout(timeout);
@@ -155,7 +164,8 @@
           originalTop,
           originalWidth,
           originalHeight,
-          scaleFactors[scaleFactorsIndex])
+          scaleFactors[scaleFactorsIndex],
+          true)
         scaleFactorsIndex++;
         if(scaleFactorsIndex === scaleFactors.length) {
           clearTimeout(timeout);
@@ -185,15 +195,17 @@
           element.style.height = positionModel.height + 'px';
         }
       }
+      var contentElement = document.createElement('div');
+      element.appendChild(contentElement);
       if(model.character) {
         var characterHeader = document.createElement('h1');
         characterHeader.innerHTML = breakLines(model.character);
-        element.appendChild(characterHeader);
+        contentElement.appendChild(characterHeader);
       }
       if(model.text) {
         var textElement = document.createElement('p');
         textElement.innerHTML = breakLines(model.text);
-        element.appendChild(textElement);
+        contentElement.appendChild(textElement);
       }
       if(model.options) {
         var optionsElement = document.createElement('ul');
@@ -203,7 +215,7 @@
           optionsElement.appendChild(optionElement);
           optionElement.ff7Option = option;
         })
-        element.appendChild(optionsElement);
+        contentElement.appendChild(optionsElement);
       }
       element.setAttribute('tabindex', 0);
       if(model.className) {

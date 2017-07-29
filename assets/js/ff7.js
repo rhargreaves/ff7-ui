@@ -58,7 +58,10 @@
         var next = current.nextElementSibling || current.parentNode.firstElementChild;
         moveFinger(current, next);
       } else if(e.keyCode == KEY_CODE_ENTER) {
-        model
+        var option = current.ff7Option;
+        if(option.action) {
+          option.action();
+        }
       }
     }, 100, {trailing: false}));
   }
@@ -160,6 +163,7 @@
           var optionElement = document.createElement('li');
           optionElement.innerHTML = breakLines(option.text || option);
           optionsElement.appendChild(optionElement);
+          optionElement.ff7Option = option;
         })
         element.appendChild(optionsElement);
       }

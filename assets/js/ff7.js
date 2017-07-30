@@ -14,7 +14,7 @@
       var KEY_CODE_ESC = 27;
       var KEY_CODE_ENTER = 13;
       var current = ff7Window.querySelector('li.selected');
-      if(!current) {
+      if(!current || self.inBackground) {
         return;
       }
       if(e.keyCode === KEY_CODE_UP) {
@@ -26,10 +26,12 @@
       } else if(e.keyCode == KEY_CODE_ENTER) {
         var option = current.ff7Option;
         if(option.dialog) {
+          self.inBackground = true;
           current.classList.add('flash');
           option.dialog.show(function() {
             current.classList.remove('flash');
             ff7Window.focus();
+            self.inBackground = false;
           });
         } else if(option.action) {
           option.action(function() {
@@ -127,7 +129,9 @@
   function createWindowDiv(model) {
     var element = document.createElement('div');
     element.className = 'ff7-window';
-    element.id = model.id;
+    if(model.id) {
+      element.id = model.id;
+    }
     if(model.style) {
       element.style = model.style;
     }

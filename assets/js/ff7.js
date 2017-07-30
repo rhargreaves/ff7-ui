@@ -61,7 +61,7 @@
         var option = current.ff7Option;
         if(option.action) {
           option.action(function() {
-            self.confirm();
+            self.confirm(option);
           });
         }
       } else if(e.keyCode == KEY_CODE_ESC) {
@@ -253,16 +253,18 @@
       });
     }
 
-    Dialogue.prototype.confirm = function() {
-      var self = this;
-      FF7.audio.playMenuSelect();
-      closeWindow(self);
+    Dialogue.prototype.confirm = function(option) {
+      if(option.sound) {
+        FF7.audio.play(option.sound);
+      } else {
+        FF7.audio.playMenuSelect();
+      }
+      this.hide();
     }
 
     Dialogue.prototype.cancel = function() {
-      var self = this;
       FF7.audio.playMenuLeave();
-      closeWindow(self);
+      this.hide();
     }
 
     Dialogue.prototype.hide = function() {

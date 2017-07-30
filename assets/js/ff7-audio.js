@@ -7,7 +7,7 @@
     menuError: new Audio('assets/audio/menu_error.mp3'),
     menuDisplay: new Audio('assets/audio/menu_display.mp3')
   }
-  
+
   for (var key in sounds) {
     var audio = sounds[key];
     audio.load();
@@ -22,7 +22,8 @@
 		playMenuLeave: function() { play(sounds.menuLeave) },
 		playMenuStart: function() { play(sounds.menuStart) },
 		playMenuError: function() { play(sounds.menuError) },
-		playMenuDisplay: function() { play(sounds.menuDisplay) }
+		playMenuDisplay: function() { play(sounds.menuDisplay) },
+    play: function(sound) { play(sounds[sound]) }
 	}
 
 })(window);

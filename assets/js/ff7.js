@@ -1,47 +1,13 @@
 (function(window) {
 
   ANIMATION_SPEED = 25;
-  TEXT_SPEED = 1000 / 30;
-  CHARS_TO_WRITE_PER_FRAME = 2;
-
-  function escapeHtml(str) {
-    var div = document.createElement('div');
-    div.appendChild(document.createTextNode(str));
-    return div.innerHTML;
-  }
-
-  function breakLines(str) {
-    return escapeHtml(str).replace(/(\r\n|\n|\r)/gm, '<br>');
-  }
-
-  function wrapNode(node) {
-    if(node.nodeType == 3 && node.textContent.trim().length !== 0) {
-      wrapTextNode(node);
-    }
-    else
-    {
-      var childNodes = [];
-      for(var i = 0; i<node.childNodes.length; i++) {
-        childNodes.push(node.childNodes[i]);
-      }
-      childNodes.forEach(function(node) {
-        wrapNode(node);
-      });
-    }
-  }
-
-  function wrapTextNode(textNode) {
-    var spanNode = document.createElement('span');
-    spanNode.setAttribute('class', 'text hidden');
-    var newTextNode = document.createTextNode(textNode.textContent);
-    spanNode.appendChild(newTextNode);
-    textNode.parentNode.replaceChild(spanNode, textNode);
-    var visibleSpanNode = document.createElement('span');
-    visibleSpanNode.setAttribute('class', 'text visible');
-    spanNode.parentNode.insertBefore(visibleSpanNode, spanNode);
-  }
 
   function enableSelections(ff7Window, self) {
+    var selection = ff7Window.querySelector('li');
+    if(selection) {
+      selection.classList.add('selected');
+      ff7Window.focus();
+    }
     ff7Window.addEventListener('keydown', _.throttle(function(e) {
       var KEY_CODE_UP = 38;
       var KEY_CODE_DOWN = 40;
@@ -63,6 +29,7 @@
             current.classList.add('flash');
             option.dialog.show(function() {
               current.classList.remove('flash');
+              ff7Window.focus();
             });
         } else if(option.action) {
           option.action(function() {
@@ -82,34 +49,6 @@
     newNode.classList.add('selected');
     FF7.audio.playMenuSelect();
   }
-
-  function animateWindowText(ff7Window, callback) {
-    var visibleSpans = ff7Window.querySelectorAll('.text.visible');
-    if(visibleSpans.length == 0)
-    return;
-    var index = 0;
-    var timeout = setInterval(function() {
-      var visibleSpan = visibleSpans[index];
-      var invisibleSpan = visibleSpan.nextSibling;
-      if(invisibleSpan.textContent.length != visibleSpan.textContent.length) {
-        var nextChar = invisibleSpan.textContent.substr(
-          visibleSpan.textContent.length, CHARS_TO_WRITE_PER_FRAME);
-          visibleSpan.textContent += nextChar;
-        } else {
-          index++;
-          if(index == visibleSpans.length) {
-            clearTimeout(timeout);
-            var selection = ff7Window.querySelector('li');
-            if(selection) {
-              selection.classList.add('selected');
-              ff7Window.focus();
-            }
-            callback();
-          }
-        }
-      }, TEXT_SPEED);
-    }
-
     function setWindowSize(element, originalLeft, originalTop,
         originalWidth, originalHeight, scaleFactor, isShrinking) {
       var width = originalWidth * scaleFactor;
@@ -128,7 +67,6 @@
         contentElement.style.marginTop = ((verticalMargin) * -1) + 'px';
         contentElement.style.marginRight = contentElement.style.marginLeft;
         contentElement.style.marginBottom = contentElement.style.marginTop;
-        console.log(contentElement);
       }
     }
 
@@ -189,38 +127,26 @@
       var element = document.createElement('div');
       element.className = 'ff7-window';
       element.id = model.id;
-      var positionModel = model.position;
-      if(positionModel) {
-        if(positionModel.left) {
-          element.style.left = positionModel.left + 'px';
-        }
-        if(positionModel.top) {
-          element.style.top = positionModel.top + 'px';
-        }
-        if(positionModel.width) {
-          element.style.width = positionModel.width + 'px';
-        }
-        if(positionModel.height) {
-          element.style.height = positionModel.height + 'px';
-        }
+      if(model.style) {
+        element.style = model.style;
       }
       var contentElement = document.createElement('div');
       element.appendChild(contentElement);
       if(model.character) {
         var characterHeader = document.createElement('h1');
-        characterHeader.innerHTML = breakLines(model.character);
+        characterHeader.innerHTML = FF7.text.breakLines(model.character);
         contentElement.appendChild(characterHeader);
       }
       if(model.text) {
         var textElement = document.createElement('p');
-        textElement.innerHTML = breakLines(model.text);
+        textElement.innerHTML = FF7.text.breakLines(model.text);
         contentElement.appendChild(textElement);
       }
       if(model.options) {
         var optionsElement = document.createElement('ul');
         model.options.forEach(function(option) {
           var optionElement = document.createElement('li');
-          optionElement.innerHTML = breakLines(option.text || option);
+          optionElement.innerHTML = FF7.text.breakLines(option.text || option);
           optionsElement.appendChild(optionElement);
           optionElement.ff7Option = option;
         })
@@ -250,12 +176,12 @@
       self.onClose = onClose;
       var element = createWindowDiv(model);
       self.element = element;
-      wrapNode(element);
+      FF7.text.init(element);
       element.style.visibility = 'hidden';
       document.body.appendChild(element);
       model.element = element;
       growWindow(element, function() {
-        animateWindowText(element, function() {
+        FF7.text.write(element, function() {
           enableSelections(element, self);
         });
       });

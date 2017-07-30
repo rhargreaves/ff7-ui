@@ -59,9 +59,27 @@
 					}]
 				});
 
+				var dialog4 = new FF7.Dialogue({
+					options: [
+						{text: "Test1"},
+						{text: "Test2"}
+					]
+				})
+
+				var dialog5 = new FF7.Dialogue({
+					options: [
+						{
+							text: "For those in a hurry",
+							dialog: dialog4
+					 	},
+						{text: "For those with a little time"}
+					]
+				});
+
 				dialog1.show();
 				dialog2.show();
 				dialog3.show();
+				dialog5.show();
 
 			}
 

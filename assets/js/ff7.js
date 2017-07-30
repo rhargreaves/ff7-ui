@@ -59,10 +59,17 @@
         moveFinger(current, next);
       } else if(e.keyCode == KEY_CODE_ENTER) {
         var option = current.ff7Option;
-        if(option.action) {
+        if(option.dialog) {
+            current.classList.add('flash');
+            option.dialog.show(function() {
+              current.classList.remove('flash');
+            });
+        } else if(option.action) {
           option.action(function() {
             self.confirm(option);
           });
+        } else {
+          self.confirm(option);
         }
       } else if(e.keyCode == KEY_CODE_ESC) {
         self.cancel();
@@ -237,9 +244,10 @@
       this.options = options;
     }
 
-    Dialogue.prototype.show = function() {
+    Dialogue.prototype.show = function(onClose) {
       var self = this;
       var model = self.options;
+      self.onClose = onClose;
       var element = createWindowDiv(model);
       self.element = element;
       wrapNode(element);
@@ -270,6 +278,9 @@
     Dialogue.prototype.hide = function() {
       var self = this;
       closeWindow(self);
+      if(self.onClose) {
+        self.onClose();
+      }
     }
 
     window.FF7 = {

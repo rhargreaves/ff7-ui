@@ -104,6 +104,30 @@ body {
   margin-left: -300px;
 }
 
+.ff7-window li.selected.flash {
+  animation: flash 66.666ms;
+  animation-iteration-count: infinite;
+}
+
+@keyframes flash {
+  0% {
+    background: url("../images/finger.png") no-repeat 0px 5px;
+    background-size: 40px;
+  }
+  49% {
+    background: url("../images/finger.png") no-repeat 0px 5px;
+    background-size: 40px;
+  }
+  50% {
+    background: none;
+    background-size: 40px;
+  }
+  100% {
+    background: none;
+    background-size: 40px;
+  }
+}
+
 body {
   background: black;
 }

@@ -61,9 +61,11 @@
         var option = current.ff7Option;
         if(option.action) {
           option.action(function() {
-            self.hide();
+            self.confirm();
           });
         }
+      } else if(e.keyCode == KEY_CODE_ESC) {
+        self.cancel();
       }
     }, 100, {trailing: false}));
   }
@@ -224,6 +226,13 @@
       return element;
     }
 
+    function closeWindow(self) {
+      shrinkWindow(self.element, function() {
+        var element = self.element;
+        element.style.visibility = 'hidden';
+      })
+    }
+
     Dialogue = function(options) {
       this.options = options;
     }
@@ -244,13 +253,21 @@
       });
     }
 
-    Dialogue.prototype.hide = function() {
+    Dialogue.prototype.confirm = function() {
+      var self = this;
+      FF7.audio.playMenuSelect();
+      closeWindow(self);
+    }
+
+    Dialogue.prototype.cancel = function() {
       var self = this;
       FF7.audio.playMenuLeave();
-      shrinkWindow(self.element, function() {
-        var element = self.element;
-        element.style.visibility = 'hidden';
-      })
+      closeWindow(self);
+    }
+
+    Dialogue.prototype.hide = function() {
+      var self = this;
+      closeWindow(self);
     }
 
     window.FF7 = {

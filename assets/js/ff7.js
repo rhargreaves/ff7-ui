@@ -1,6 +1,7 @@
 (function(window) {
 
   ANIMATION_SPEED = 25;
+  SCALE_FACTORS = [0.2, 0.5, 0.75, 1];
 
   function enableSelections(ff7Window, self) {
     var selection = ff7Window.querySelector('li');
@@ -52,7 +53,8 @@
     FF7.audio.playMenuSelect();
   }
 
-  function setWindowSize(element, originalLeft, originalTop, originalWidth, originalHeight, scaleFactor, isShrinking) {
+  function setWindowSize(element, originalLeft, originalTop,
+    originalWidth, originalHeight, scaleFactor, contentFunc) {
     var width = originalWidth * scaleFactor;
     var height = originalHeight * scaleFactor;
     var horizontalMargin = (originalWidth - width) / 2;
@@ -63,49 +65,42 @@
     element.style.width = width + 'px';
     element.style.height = height + 'px';
     element.style.visibility = '';
-    if(isShrinking) {
-      var contentElement = element.getElementsByTagName("div")[0];
-      contentElement.style.marginLeft = ((horizontalMargin) * -1) + 'px';
-      contentElement.style.marginTop = ((verticalMargin) * -1) + 'px';
-      contentElement.style.marginRight = contentElement.style.marginLeft;
-      contentElement.style.marginBottom = contentElement.style.marginTop;
+    if(contentFunc) {
+      contentFunc(element, horizontalMargin, verticalMargin);
     }
   }
 
   function growWindow(element, onComplete) {
     var pos = element.getBoundingClientRect()
     element.ff7OriginalPos = pos;
-    var originalLeft = pos.left;
-    var originalTop = pos.top;
-    var originalWidth = pos.right - pos.left;
-    var originalHeight = pos.bottom - pos.top;
-    var scaleFactors = [0.2, 0.5, 0.75, 1];
-    var scaleFactorsIndex = 0;
-    var timeout = setInterval(function() {
-      setWindowSize(element,
-        originalLeft,
-        originalTop,
-        originalWidth,
-        originalHeight,
-        scaleFactors[scaleFactorsIndex],
-        false);
-      scaleFactorsIndex++;
-      if(scaleFactorsIndex === scaleFactors.length) {
-        clearTimeout(timeout);
-        if(onComplete) {
-          onComplete();
-        }
-      }
-    }, ANIMATION_SPEED);
+    growOrShrinkWindow(element,
+      pos,
+      SCALE_FACTORS,
+      null,
+      onComplete);
   }
 
   function shrinkWindow(element, onComplete) {
-    var pos = element.ff7OriginalPos;
+    growOrShrinkWindow(element,
+      element.ff7OriginalPos,
+      SCALE_FACTORS.slice().reverse(),
+      maintainContentPosition,
+      onComplete);
+  }
+
+  function maintainContentPosition(element, horizontalMargin, verticalMargin) {
+    var contentElement = element.getElementsByTagName("div")[0];
+    contentElement.style.marginLeft = ((horizontalMargin) * -1) + 'px';
+    contentElement.style.marginTop = ((verticalMargin) * -1) + 'px';
+    contentElement.style.marginRight = contentElement.style.marginLeft;
+    contentElement.style.marginBottom = contentElement.style.marginTop;
+  }
+
+  function growOrShrinkWindow(element, pos, scaleFactors, contentFunc, onComplete) {
     var originalLeft = pos.left;
     var originalTop = pos.top;
     var originalWidth = pos.right - pos.left;
     var originalHeight = pos.bottom - pos.top;
-    var scaleFactors = [0.2, 0.5, 0.75, 1].reverse();
     var scaleFactorsIndex = 0;
     var timeout = setInterval(function() {
       setWindowSize(
@@ -115,7 +110,7 @@
         originalWidth,
         originalHeight,
         scaleFactors[scaleFactorsIndex],
-        true);
+        contentFunc);
       scaleFactorsIndex++;
       if(scaleFactorsIndex === scaleFactors.length) {
         clearTimeout(timeout);

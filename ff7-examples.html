@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="assets/css/ff7-ui.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/ff7-ui-fonts.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/demo.css">
+	</head>
+	<body>
+
+		<div class="ff7-text background">
+			...Who are you?...
+		</div>
+
+		<script src="assets/js/ff7.js"></script>
+		<script src="assets/js/ff7-text.js"></script>
+		<script src="assets/js/ff7-audio.js"></script>
+		<script src="assets/js/underscore.min.js"></script>
+		<script>
+
+		function showDialogues() {
+
+			var dialog1 = new FF7.Dialogue({
+				text: '“C\'mon newcomer.\nFollow me.”',
+				id: 'start-quote'
+			});
+
+			var dialog2 = new FF7.Dialogue({
+				character: 'Aeris',
+				text: '“This guy are sick.”',
+				id: 'aeris-quote'
+			});
+
+			var dialog3 = new FF7.Dialogue({
+				id: 'shinra-bld-dialogue',
+				text: '“Hey, Cloud.\n...What should we do?”',
+				options: [
+					{
+						text: "Let's bust on in!",
+						action: function(next) {
+							dialog1.hide();
+							setTimeout(function() {
+								dialog1.show();
+								dialog3.show();
+							}, 1000);
+							next();
+						}
+					},
+					{
+						text: "Let's sneak in quietly",
+						sound: 'menuStart',
+						action: function(next) {
+							dialog2.hide();
+							setTimeout(function() {
+								dialog2.show();
+								dialog3.show();
+							}, 1000);
+							next();
+						}
+					}]
+				});
+
+				var dialog4 = new FF7.Dialogue({
+					options: [
+						{text: "Test1"},
+						{text: "Test2"}
+					]
+				})
+
+				var dialog5 = new FF7.Dialogue({
+					options: [
+						{
+							text: "For those in a hurry",
+							dialog: dialog4
+					 	},
+						{text: "For those with a little time"}
+					]
+				});
+
+				dialog1.show();
+				dialog2.show();
+				dialog3.show();
+				dialog5.show();
+
+			}
+
+			// workaround to wait for font to load as dialogue
+			// box are incorrectly sized if it loads after font
+			window.setTimeout(showDialogues, 250);
+
+		</script>
+	</body>
+</html>
